@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>首页</title>
+  <%- include head %>
+</head>
+
+<body>
+  <%- include('bar', {username: username}) %>
+
+  <div class="list">
+    <div class="row">
+      <span>序号</span>
+      <span>用户名</span>
+      <span>标题</span>
+      <span>提交时间</span>
+      <span>操作</span>
+    </div>
+    <!-- 循环 -->
+    <% data.list.map(function(item, index) { %>
+    <div class="row">
+      <span><%= index+1 %></span>
+      <span><%= item.username %></span>
+      <span><a href="/detail?id=<%=item.id%>"><%= item.title %></a></span>
+      <span><%= item.time %></span>
+      <span>
+        <a href="/write?id=<%=item.id%>&page=<%=data.curPage%>">编辑</a>
+        <a href="/article/delete?id=<%=item.id%>&page=<%=data.curPage%>">删除</a>
+      </span>
+    </div>
+    <% }) %>
+    <!-- 分页 -->
+    <div class="pages">
+      第
+      <% if (data.total == 0 ){ %>
+      <a>1</a>
+      <% }else{ %>
+      <% for(let i=1; i<=data.total; i++) { %>
+      <a href="/?page=<%= i %>"><%= i %></a>
+      <% }} %>
+      页
+    </div>
+
+  </div>
+</body>
+
+</html>
